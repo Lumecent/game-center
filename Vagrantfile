@@ -7,7 +7,7 @@ required_plugins.each do |plugin|
 end
 
 domains = {
-  app: 'yii2basic.test'
+  app: 'game-center.test'
 }
 
 vagrantfile_dir_path = File.dirname(__FILE__)

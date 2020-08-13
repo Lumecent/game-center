@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
+        'id' => 'register-form',
         'layout' => 'horizontal',
         'fieldConfig' => [
             'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
@@ -21,21 +21,15 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
+    <?=$form->field($model, 'login')->textInput()->label('Логин')?>
     <?=$form->field($model, 'email')->textInput()->label('Email')?>
     <?=$form->field($model, 'password')->passwordInput()->label('Пароль')?>
-    <?=$form->field($model, 'remember')->checkbox([
-        'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-    ])->label('Запомнить меня')?>
+    <?=$form->field($model, 'password_repeat')->passwordInput()->label('Повторите пароль')?>
 
     <div class="form-group">
         <div class="col-lg-offset-1 col-lg-11">
-            <?= Html::submitButton('Авторизация', ['class' => 'btn btn-success', 'name' => 'login-button']) ?>
+            <?= Html::submitButton('Регистрация', ['class' => 'btn btn-success', 'name' => 'login-button']) ?>
         </div>
-    </div>
-
-    <h3>Нет аккаунта? </h3>
-    <div class="col-lg-offset-1 col-lg-11">
-        <a href="/register" class="btn btn-primary">Регистрация</a>
     </div>
 
     <?php ActiveForm::end(); ?>
