@@ -51,3 +51,7 @@ $this->title = 'My Yii Application';
 
     </div>
 </div>
+<script>
+    ws = new WebSocket("ws://192.168.83.137:2346/?user=tester01");
+    ws.onmessage = function(evt) {alert(evt.data);};
+</script>

@@ -5,7 +5,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="row">
     <div class = "col-xs-12 col-md-3">
-        <a href="/account/games/pairs-settings">
+        <a href="/account/games/pair-settings">
             <h3 class="center">Пары</h3>
             <img class="game-wall" src="/image/pairs.jpg" alt="">
         </a>

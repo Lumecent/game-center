@@ -11,7 +11,7 @@ class GameServer
 
     public function setUserGameConnect($game, $gameKey, $connect)
     {
-        $this->users[$game] = [$gameKey => [$connect]];
+        $this->users[$game][$gameKey][] = $connect;
     }
 
     public function getUserGameConnect($game, $gameKey)
@@ -25,7 +25,7 @@ class GameServer
 
         $ws_worker->count = 1;
 
-        $ws_worker->onWorkerStart = function() use (&$users)
+        $ws_worker->onWorkerStart = function()
         {
             $inner_tcp_worker = new Worker("tcp://192.168.83.137:1234");
 
@@ -33,7 +33,7 @@ class GameServer
                 $data = json_decode($data);
 
                 $userID = $data->user_id ?? null;
-                $userKey = $userID;
+                $userKey = 'key';
                 $gameKey = $data->game_key ?? null;
                 $game = $data->game ?? null;
 
@@ -73,7 +73,7 @@ class GameServer
                 $userID = User::findOne(['security_key' => $userKey])->id;
             }
 
-            if ($userID && GameCenter::gameExists($game, $userID, $gameKey)){
+            if (!is_null($userID) && GameCenter::gameExists($game, $userID, $gameKey)){
                 $message = GameCenter::action($userID, $data);
 
                 $this->sendMessage($game, $gameKey, $message);

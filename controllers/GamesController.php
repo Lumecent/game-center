@@ -40,10 +40,10 @@ class GamesController extends Controller
         $pair = Pair::find()->where('(player_one = ' . $userID . ' OR player_two = ' . $userID . ') AND status != "end" ')->one();
 
         if (!$pair){
-            $this->redirect('/account/games');
+            return $this->redirect('/account/games');
         }
 
-        return $this->render('pairs', compact('pair', 'user'));
+        return $this->render('pair', compact('pair', 'user'));
     }
 
     public function actionPairSettings()
@@ -56,11 +56,11 @@ class GamesController extends Controller
             $model->userID = Yii::$app->user->getId();
 
             if ($model->connectGame()){
-                return $this->redirect(['account/games/pairs']);
+                return $this->redirect(['account/games/pair']);
             }
         }
 
-        return $this->render('pairs-settings', compact('model'));
+        return $this->render('pair-settings', compact('model'));
     }
 
 

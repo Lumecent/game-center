@@ -142,6 +142,17 @@ class GenerateGamePair
         return $this->pairMax;
     }
 
+    public function getEmptyBox()
+    {
+        $box = [];
+
+        for ($i = 0; $i <= $this->getPair() * 2; $i ++){
+            $box[$i] = '';
+        }
+
+        return implode(';', $box);
+    }
+
     public function runGame($gameCountBox)
     {
         $this->countPairs($gameCountBox);

@@ -52,6 +52,9 @@ $config = [
                 'login' => 'site/login',
                 'register' => 'site/register',
                 'logout' => 'site/logout',
+
+                'account/games/pair-settings' => 'games/pair-settings',
+                'account/games/pair' => 'games/pair',
             ],
         ],
     ],

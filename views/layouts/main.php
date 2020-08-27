@@ -10,6 +10,8 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
+new \app\models\games\GameIsActive(Yii::$app->user->getId());
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -41,18 +43,9 @@ AppAsset::register($this);
             ['label' => 'Главная', 'url' => ['/']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-            ['label' => 'Авторизация', 'url' => ['/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['logout'], 'post')
-                . Html::submitButton(
-                    'Выход (' . Yii::$app->user->identity->login . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
+            Yii::$app->user->isGuest ?
+                (['label' => 'Авторизация', 'url' => ['/login']]) :
+                (['label' => 'Выход (' . Yii::$app->user->identity->login . ')', 'url' => ['/logout']])
         ],
     ]);
     NavBar::end();

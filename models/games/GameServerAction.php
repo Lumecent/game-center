@@ -2,7 +2,7 @@
 
 namespace app\models\games;
 
-use app\models\essence\GameAction;
+use app\models\essence\GameTimeAction;
 
 class GameServerAction
 {
@@ -63,7 +63,7 @@ class GameServerAction
     public function start()
     {
         while (!$this->stopServer){
-            $actions = GameAction::find()->where('action_time <= ' . time() . '')->all();
+            $actions = GameTimeAction::find()->where('action_time <= ' . time() . '')->all();
 
             if ($actions){
                 foreach ($actions as $key => $action){

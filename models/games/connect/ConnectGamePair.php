@@ -4,6 +4,7 @@ namespace app\models\games\connect;
 
 use app\components\validators\GameExistsValidator;
 use app\models\essence\Pair;
+use app\models\games\GameActionCreate;
 use app\models\games\generate\GenerateGamePair;
 use Yii;
 use yii\base\Model;
@@ -48,6 +49,8 @@ class ConnectGamePair extends Model
 
                         $game->save();
 
+                        GameActionCreate::createAction($game, 'pair', 'exclude', 185);
+
                         $transaction->commit();
                     }catch (\Exception $e){
                         $transaction->rollBack();
@@ -72,6 +75,7 @@ class ConnectGamePair extends Model
         $newGame = new GenerateGamePair();
         $game->player_one = $this->userID;
         $game->game_box = $newGame->runGame($this->game_box);
+        $game->ai_memory = $newGame->getEmptyBox();
         $game->sum_pair = $newGame->getPair();
         $game->type = $this->type;
 
@@ -80,6 +84,7 @@ class ConnectGamePair extends Model
             $game->player_active = $game->player_one;
         }elseif ($this->type == 'ai'){
             $game->status = 'active';
+            $game->player_two = 0;
             $players = [$game->player_one, 0];
             $game->player_active = $players[rand(0, 1)];
             $game->time_active = time() + 180;
@@ -88,6 +93,11 @@ class ConnectGamePair extends Model
         }
 
         $game->security_key = Yii::$app->security->generateRandomString(20);
+
+        if (!is_null($game->player_active) && $game->player_active === 0){
+            GameActionCreate::createAction($game, 'pair', 'ai', 5);
+            GameActionCreate::createAction($game, 'pair', 'exclude', 180);
+        }
 
         return $game->save();
     }
